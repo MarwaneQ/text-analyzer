@@ -151,6 +151,46 @@
   -fx-border-color: transparent;
 }
 
+/* Remove button in list cells */
+.remove-button {
+  -fx-background-color: transparent;
+  -fx-text-fill: #dc3545;
+  -fx-font-size: 20px;
+  -fx-font-weight: bold;
+  -fx-padding: 2px 8px;
+  -fx-cursor: hand;
+  -fx-background-radius: 4px;
+  -fx-min-width: 32px;
+  -fx-pref-width: 32px;
+  -fx-min-height: 32px;
+  -fx-pref-height: 32px;
+  -fx-border-color: transparent;
+}
+
+.remove-button:hover {
+  -fx-background-color: #dc3545;
+  -fx-text-fill: white;
+  -fx-scale-x: 1.1;
+  -fx-scale-y: 1.1;
+}
+
+.remove-button:pressed {
+  -fx-background-color: #bb2d3b;
+  -fx-scale-x: 1;
+  -fx-scale-y: 1;
+}
+
+/* Selected list cell remove button styling */
+.list-cell:filled:selected .remove-button {
+  -fx-text-fill: white;
+  -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.list-cell:filled:selected .remove-button:hover {
+  -fx-background-color: #dc3545;
+  -fx-text-fill: white;
+}
+
 /* ============================================
    STATUS BAR
    ============================================ */
@@ -241,12 +281,12 @@
 
 /* Folder Open Icon (for button) */
 .icon-folder-open {
-  -fx-min-width: 18px;
-  -fx-min-height: 16px;
-  -fx-max-width: 18px;
-  -fx-max-height: 16px;
+  -fx-min-width: 20px;
+  -fx-min-height: 18px;
+  -fx-max-width: 20px;
+  -fx-max-height: 18px;
   -fx-background-color: white;
-  -fx-shape: "M 0,4 L 7,4 L 9,1 L 18,1 L 18,6 L 16,6 L 16,16 L 0,16 Z M 2,6 L 14,6 L 14,14 L 2,14 Z";
+  -fx-shape: "M 2,0 L 8,0 L 10,3 L 20,3 L 20,5 L 22,5 L 22,18 L 0,18 L 0,5 L 2,5 Z M 2,5 L 2,16 L 20,16 L 20,5 Z";
 }
 
 /* Play Icon */

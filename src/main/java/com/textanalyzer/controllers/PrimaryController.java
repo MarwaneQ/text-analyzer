@@ -2,7 +2,10 @@ package com.textanalyzer.controllers;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.util.HashMap;
@@ -25,6 +28,9 @@ public class PrimaryController {
     public void initialize() {
         // Initially disable analyze button
         analyzeBtn.setDisable(true);
+        
+        // Set custom cell factory for file list with remove buttons
+        fileListView.setCellFactory(listView -> new FileListCell());
         
         // Listen for changes to file list to update empty state
         fileListView.getItems().addListener((javafx.collections.ListChangeListener<String>) c -> {
@@ -102,5 +108,58 @@ public class PrimaryController {
             "status-complete", "status-error"
         );
         statusIndicator.getStyleClass().add(styleClass);
+    }
+    
+    private void removeFile(String fileName) {
+        fileListView.getItems().remove(fileName);
+        fileNameToPathMap.remove(fileName);
+        
+        if (fileListView.getItems().isEmpty()) {
+            updateStatus("All files removed", "status-ready");
+        } else {
+            updateStatus("File removed", "status-ready");
+        }
+    }
+    
+    // Custom ListCell with remove button
+    private class FileListCell extends ListCell<String> {
+        private final HBox container;
+        private final Label fileNameLabel;
+        private final Button removeButton;
+        
+        public FileListCell() {
+            container = new HBox(10);
+            container.setAlignment(Pos.CENTER_LEFT);
+            
+            fileNameLabel = new Label();
+            fileNameLabel.setMaxWidth(Double.MAX_VALUE);
+            HBox.setHgrow(fileNameLabel, Priority.ALWAYS);
+            
+            removeButton = new Button();
+            removeButton.getStyleClass().add("remove-button");
+            removeButton.setText("×");
+            removeButton.setOnAction(e -> {
+                String fileName = getItem();
+                if (fileName != null) {
+                    removeFile(fileName);
+                }
+            });
+            
+            container.getChildren().addAll(fileNameLabel, removeButton);
+        }
+        
+        @Override
+        protected void updateItem(String fileName, boolean empty) {
+            super.updateItem(fileName, empty);
+            
+            if (empty || fileName == null) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                setText(null); // Clear text since we're using graphic
+                fileNameLabel.setText(fileName);
+                setGraphic(container);
+            }
+        }
     }
 }

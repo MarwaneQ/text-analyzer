@@ -9,3 +9,4 @@ com/textanalyzer/App.class
 module-info.class
 com/textanalyzer/utils/ThreadPoolManager.class
 com/textanalyzer/exceptions/InvalidFileException.class
+com/textanalyzer/controllers/PrimaryController$FileListCell.class
