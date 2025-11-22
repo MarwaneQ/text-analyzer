@@ -169,18 +169,24 @@ text-analyzer/
 
 ### Color Scheme
 
-- **Background**: white space theme (`#FFFFFF`)
-- **Primary Gradient**: Purple to Pink (`#667eea → #764ba2 → #f093fb`)
-- **Success**: Teal to Green (`#11998e → #38ef7d`)
-- **Accent**: Neon glow effects with glassmorphism
+- **Header Gradient**: Purple to Pink (`linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)`)
+- **Background**: Light gray (`#f5f5f5`)
+- **Cards**: White (`#ffffff`) with subtle shadows
+- **File Row**: Purple gradient (`#667eea → #f093fb`) with hover effects
+- **Load Button**: Blue gradient (`#4a90e2 → #357abd`)
+- **Start Button**: Green gradient (`#11998e → #38ef7d`)
+- **Status Indicator**: Teal (`#11998e`) for success state
 
 ### Key Features
 
-- **Glassmorphism Cards** - Semi-transparent with backdrop blur
-- **Neon Glow Effects** - CSS-based shadows on interactive elements
+- **Gradient Header** - Bold purple-to-pink gradient with white text
+- **Clean Card Design** - White glassmorphic cards with rounded corners and soft shadows
+- **File List Rows** - Purple gradient backgrounds with white text and remove buttons
+- **Action Buttons** - Large rounded buttons with gradient fills and icon graphics
 - **Smooth Animations** - Scale effects on hover/press
 - **Responsive Layout** - BorderPane with flexible regions
-- **Custom Icons** - SVG-based vector icons in CSS
+- **Custom Icons** - SVG-based vector icons in CSS (folder and play icons)
+- **Status Bar** - Bottom indicator with color-coded messages
 
 ---
 
