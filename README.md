@@ -305,7 +305,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Course**: Concurrency Programming (2025-2026)
 - **Instructor**: Dr. Boudjellal Nada
-- **Institution**: [Your University Name]
+- **Institution**: NTIC - GL
 
 ---
 
@@ -316,21 +316,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - OpenJDK team for Java 21
 - Course instructor for project guidance
 
----
-
-## 📞 Contact & Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/MarwaneQ/text-analyzer/issues)
-- **Email**: [your.email@example.com]
-- **Documentation**: [Wiki](https://github.com/MarwaneQ/text-analyzer/wiki)
-
----
-
 <div align="center">
 
 **Made with ❤️ using Java & JavaFX**
-
-⭐ Star this repo if you find it helpful!
 
 [Back to Top](#-text-analyzer)
 
