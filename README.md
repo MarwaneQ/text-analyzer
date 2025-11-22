@@ -270,26 +270,6 @@ module com.textanalyzer {
 - [ ] Results export functionality
 - [ ] Error handling with custom exceptions
 
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Contribution Guidelines
-
-- Follow existing code style
-- Add JavaDoc comments for public methods
-- Update documentation for new features
-- Test thoroughly before submitting PR
-
----
 
 ## 📝 License
 
