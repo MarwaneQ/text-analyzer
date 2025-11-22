@@ -62,7 +62,7 @@ Text Analyzer is a JavaFX-based desktop application designed to analyze multiple
 
 ### Main Interface
 
-![Text Analyzer Main Screen](screenshots/video.mov)
+![Text Analyzer Main Screen](screenshots/video.gif)
 
 _Modern white theme with glassmorphism effects and gradient backgrounds_
 
