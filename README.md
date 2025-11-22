@@ -62,9 +62,9 @@ Text Analyzer is a JavaFX-based desktop application designed to analyze multiple
 
 ### Main Interface
 
-![Text Analyzer Main Screen](https://github.com/user-attachments/assets/screenshot-main.png)
+![Text Analyzer Main Screen](screenshots/screenshot-main.png.png)
 
-_Modern dark theme with glassmorphism effects and gradient backgrounds_
+_Modern white theme with glassmorphism effects and gradient backgrounds_
 
 ### File Analysis View
 
@@ -169,7 +169,7 @@ text-analyzer/
 
 ### Color Scheme
 
-- **Background**: Dark space theme (`#0f0f23`)
+- **Background**: white space theme (`#FFFFFF`)
 - **Primary Gradient**: Purple to Pink (`#667eea → #764ba2 → #f093fb`)
 - **Success**: Teal to Green (`#11998e → #38ef7d`)
 - **Accent**: Neon glow effects with glassmorphism
