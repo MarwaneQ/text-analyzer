@@ -1,4 +1,11 @@
-com/textanalyzer/PrimaryController.class
+com/textanalyzer/controllers/SecondaryController.class
+com/textanalyzer/models/AnalyzedFile.class
+com/textanalyzer/utils/FileUtils.class
+com/textanalyzer/services/FileLoaderService.class
+com/textanalyzer/models/AnalysisResult.class
+com/textanalyzer/controllers/PrimaryController.class
+com/textanalyzer/services/TextAnalysisService.class
 com/textanalyzer/App.class
 module-info.class
-com/textanalyzer/SecondaryController.class
+com/textanalyzer/utils/ThreadPoolManager.class
+com/textanalyzer/exceptions/InvalidFileException.class

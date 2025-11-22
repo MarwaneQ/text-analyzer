@@ -4,23 +4,83 @@
 <?import javafx.scene.control.*?>
 <?import javafx.geometry.*?>
 
-<VBox spacing="20" alignment="TOP_CENTER" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.textanalyzer.PrimaryController"
-      style="-fx-padding: 30;">
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.textanalyzer.controllers.PrimaryController"
+            stylesheets="@styles.css"
+            styleClass="root">
     
-    <Label text="TEXT ANALYZER" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
-
-    <VBox spacing="10" style="-fx-border-color: #ccc; -fx-padding: 15; -fx-border-radius: 5;">
-        <Label text="Selected Files:" style="-fx-font-size: 16;"/>
-        <ListView fx:id="fileListView" prefHeight="200"/>
-    </VBox>
-
-    <HBox spacing="20" alignment="CENTER">
-        <Button text="Load Files" fx:id="loadBtn" prefWidth="150" onAction="#onLoadFiles"/>
-        <Button text="Start Analysis" fx:id="analyzeBtn" prefWidth="150" onAction="#onStartAnalysis"/>
-    </HBox>
-
-    <Label fx:id="statusLabel" text="Status: Waiting..."
-           style="-fx-font-size: 14; -fx-text-fill: #333;"/>
-
-</VBox>
+    <!-- Header Section -->
+    <top>
+        <VBox styleClass="header" alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="30" right="30" bottom="20" left="30"/>
+            </padding>
+            <Label text="TEXT ANALYZER" styleClass="app-title"/>
+            <Label text="Multi-threaded Text Analysis Application" styleClass="app-subtitle"/>
+        </VBox>
+    </top>
+    
+    <!-- Main Content -->
+    <center>
+        <VBox spacing="25" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="20" right="40" bottom="20" left="40"/>
+            </padding>
+            
+            <!-- File Selection Section -->
+            <VBox spacing="12" styleClass="card" VBox.vgrow="ALWAYS">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                
+                <HBox alignment="CENTER_LEFT" spacing="15">
+                    <HBox spacing="8" alignment="CENTER_LEFT">
+                        <Label styleClass="icon-folder"/>
+                        <Label text="Selected Files" styleClass="section-title"/>
+                    </HBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Label fx:id="fileCountLabel" text="0 files" styleClass="file-count"/>
+                </HBox>
+                
+                <ListView fx:id="fileListView" styleClass="file-list" prefHeight="280" VBox.vgrow="ALWAYS"/>
+                
+                <Label fx:id="emptyStateLabel" text="No files selected. Click 'Load Files' to get started." 
+                       styleClass="empty-state" managed="true" visible="true"/>
+            </VBox>
+            
+            <!-- Action Buttons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="loadBtn" styleClass="primary-button" 
+                        prefWidth="180" prefHeight="45" onAction="#onLoadFiles">
+                    <graphic>
+                        <HBox spacing="8" alignment="CENTER">
+                            <Label styleClass="icon-folder-open"/>
+                            <Label text="Load Files" styleClass="button-text"/>
+                        </HBox>
+                    </graphic>
+                </Button>
+                <Button fx:id="analyzeBtn" styleClass="success-button" 
+                        prefWidth="180" prefHeight="45" onAction="#onStartAnalysis">
+                    <graphic>
+                        <HBox spacing="8" alignment="CENTER">
+                            <Label styleClass="icon-play"/>
+                            <Label text="Start Analysis" styleClass="button-text"/>
+                        </HBox>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+    </center>
+    
+    <!-- Footer Status Bar -->
+    <bottom>
+        <HBox styleClass="status-bar" alignment="CENTER_LEFT" spacing="10">
+            <padding>
+                <Insets top="15" right="30" bottom="15" left="30"/>
+            </padding>
+            <Label text="●" fx:id="statusIndicator" styleClass="status-indicator"/>
+            <Label fx:id="statusLabel" text="Ready to load files" styleClass="status-text"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>

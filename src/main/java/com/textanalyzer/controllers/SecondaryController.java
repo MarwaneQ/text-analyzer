@@ -1,5 +1,6 @@
-package com.textanalyzer;
+package com.textanalyzer.controllers;
 
+import com.textanalyzer.App;
 import java.io.IOException;
 import javafx.fxml.FXML;
 
