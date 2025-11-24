@@ -279,7 +279,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Marwane Eben** - _Initial work_ - [MarwaneQ](https://github.com/MarwaneQ)
+- **Merouane Bensadallah** - _Initial work_ - [MarwaneQ](https://github.com/MarwaneQ)
 
 ### Course Information
 
