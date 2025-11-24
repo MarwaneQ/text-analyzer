@@ -11,6 +11,12 @@ import java.io.IOException;
 /**
  * JavaFX App
  */
+
+/*team:
+- Bensadallah Merouane , 
+- Bensalem Hadil , 
+- Bouzid Yasmine , 
+*/
 public class App extends Application {
 
     private static Scene scene;

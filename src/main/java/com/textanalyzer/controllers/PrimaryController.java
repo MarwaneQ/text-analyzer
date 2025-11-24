@@ -156,7 +156,7 @@ public class PrimaryController {
                 setText(null);
                 setGraphic(null);
             } else {
-                setText(null); // Clear text since we're using graphic
+                setText(null); 
                 fileNameLabel.setText(fileName);
                 setGraphic(container);
             }
