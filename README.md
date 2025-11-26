@@ -188,15 +188,7 @@ text-analyzer/
 - **Custom Icons** - SVG-based vector icons in CSS (folder and play icons)
 - **Status Bar** - Bottom indicator with color-coded messages
 
----
 
-## 📚 Documentation
-
-- **[Sprint 1 Codebase Report](SPRINT1_CODEBASE_REPORT.md)** - Comprehensive line-by-line analysis
-- **[Copilot Instructions](.github/copilot-instructions.md)** - AI coding assistant guide
-- **[Project Overview](ProjectOverview.txt)** - Course project requirements
-
----
 
 ## 🛠️ Development
 
