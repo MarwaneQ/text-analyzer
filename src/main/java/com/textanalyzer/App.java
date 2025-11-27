@@ -15,7 +15,7 @@ import java.io.IOException;
 /*team:
 - Bensadallah Merouane , 
 - Bensalem Hadil , 
-- Bouzid Yasmine , 
+- zerizer melissa, 
 */
 public class App extends Application {
 
