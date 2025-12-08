@@ -43,8 +43,8 @@
 
 .section-title {
   -fx-font-size: 18px;
-  -fx-font-weight: 600;
-  -fx-text-fill: #2c3e50;
+  -fx-font-weight: 700;
+  -fx-text-fill: #000000;
 }
 
 .file-count {
@@ -300,6 +300,140 @@
 }
 
 /* ============================================
+   RESULTS VIEW STYLES
+   ============================================ */
+
+/* Statistics Cards */
+.stats-grid {
+  -fx-hgap: 20px;
+  -fx-vgap: 20px;
+}
+
+.stat-card {
+  -fx-background-color: linear-gradient(
+    from 0% 0% to 100% 100%,
+    #667eea 0%,
+    #764ba2 100%
+  );
+  -fx-background-radius: 10px;
+  -fx-effect: dropshadow(three-pass-box, rgba(102, 126, 234, 0.3), 10, 0, 0, 3);
+}
+
+.stat-card .label {
+  -fx-text-fill: white !important;
+}
+
+.stat-label {
+  -fx-font-size: 14px !important;
+  -fx-text-fill: #ffffff !important;
+  -fx-font-weight: 600 !important;
+}
+
+.stat-value {
+  -fx-font-size: 32px !important;
+  -fx-font-weight: bold !important;
+  -fx-text-fill: #ffffff !important;
+}
+
+.result-filename {
+  -fx-font-size: 20px !important;
+  -fx-font-weight: 700 !important;
+  -fx-text-fill: #1a1a1a !important;
+}
+
+/* Frequency List */
+.frequency-section {
+  -fx-background-color: white;
+  -fx-background-radius: 12px;
+  -fx-padding: 20px;
+  -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.08), 12, 0, 0, 2);
+}
+
+.frequency-section .section-title {
+  -fx-font-size: 22px;
+  -fx-font-weight: 700;
+  -fx-text-fill: #000000;
+}
+
+.frequency-list {
+  -fx-background-color: #f8f9fa;
+  -fx-border-color: #e9ecef;
+  -fx-border-radius: 8px;
+  -fx-background-radius: 8px;
+  -fx-border-width: 1px;
+}
+
+.frequency-list .list-cell {
+  -fx-background-color: transparent;
+  -fx-text-fill: #000000;
+  -fx-font-family: "Consolas", "Monaco", "SF Mono", monospace;
+  -fx-font-size: 16px;
+  -fx-padding: 12px 16px;
+  -fx-font-weight: 600;
+}
+
+.frequency-list .list-cell:odd {
+  -fx-background-color: #ffffff;
+}
+
+.frequency-list .list-cell:hover {
+  -fx-background-color: #e7e9fc;
+  -fx-text-fill: #667eea;
+}
+
+/* Progress Section */
+.progress-text {
+  -fx-font-size: 14px;
+  -fx-text-fill: #2d3748;
+  -fx-font-style: italic;
+  -fx-font-weight: 600;
+}
+
+/* Error Card */
+.error-card {
+  -fx-background-color: #fff5f5;
+  -fx-border-color: #feb2b2;
+  -fx-border-width: 2px;
+  -fx-border-radius: 12px;
+  -fx-background-radius: 12px;
+}
+
+.error-title {
+  -fx-font-size: 18px;
+  -fx-font-weight: bold;
+  -fx-text-fill: #c53030;
+}
+
+.error-text {
+  -fx-font-size: 14px;
+  -fx-text-fill: #742a2a;
+}
+
+/* Secondary Button */
+.secondary-button {
+  -fx-background-color: linear-gradient(to bottom, #6c757d 0%, #495057 100%);
+  -fx-text-fill: white;
+  -fx-font-size: 14px;
+  -fx-font-weight: 600;
+  -fx-background-radius: 25px;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(three-pass-box, rgba(108, 117, 125, 0.3), 8, 0, 0, 2);
+  -fx-border-color: transparent;
+}
+
+.secondary-button:hover {
+  -fx-background-color: linear-gradient(to bottom, #5a6268 0%, #343a40 100%);
+  -fx-scale-x: 1.03;
+  -fx-scale-y: 1.03;
+}
+
+.secondary-button:pressed {
+  -fx-scale-x: 0.98;
+  -fx-scale-y: 0.98;
+  -fx-effect: dropshadow(three-pass-box, rgba(108, 117, 125, 0.2), 5, 0, 0, 1);
+}
+
+/* ============================================
    ANIMATIONS & TRANSITIONS
    ============================================ */
 .button {
@@ -324,11 +458,29 @@
   -fx-spacing: 10px;
 }
 
-/* Progress indicators (for future sprints) */
+/* Progress Bar */
 .progress-bar {
-  -fx-accent: #667eea;
+  -fx-background-color: #e9ecef;
+  -fx-background-radius: 15px;
+}
+
+.progress-bar .bar {
+  -fx-background-color: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+  -fx-background-radius: 15px;
+  -fx-background-insets: 0;
+}
+
+.progress-bar .track {
+  -fx-background-color: #e9ecef;
+  -fx-background-radius: 15px;
 }
 
 .progress-indicator {
   -fx-progress-color: #667eea;
+}
+
+/* Status Complete */
+.status-complete {
+  -fx-text-fill: #38ef7d;
+  -fx-effect: dropshadow(gaussian, rgba(56, 239, 125, 0.6), 8, 0, 0, 0);
 }

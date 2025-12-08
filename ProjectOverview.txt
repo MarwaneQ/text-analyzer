@@ -1,0 +1,81 @@
+Course Project (2025-2026)
+
+Multi-Threaded Text Analyzer Desktop App
+
+In this course project, you are asked to develop a Multithreaded Text Analysis
+Desktop Application.
+This application aims to allow users to analyze one or more text files concurrently.
+Users should be able to load and display text files, initiate analysis, and view the
+results for each file, including statistics such as total words, unique words, and most
+frequent terms.
+
+The application will support concurrent processing of multiple files, providing real-
+time progress indicators for each ongoing analysis task. Robust error handling
+
+should ensure the application behaves gracefully when a file cannot be processed.
+
+Additionally, special attention should be given to clarity, simplicity, and user-
+friendliness in the interface design to ensure a smooth user experience.The project
+
+will be organized into three sprints, each with distinct work intervals.
+Details for each sprint will be published in the course E-learning platform at their
+respective times. (below you can find Sprint 1 description)
+
+Dr. Boudjellal Nada Concurrency Programming
+
+Sprint N°01: User Interface Development
+
+Description:
+In the first sprint, you will focus on creating the user interface for the desktop
+application. The interface should be user-friendly and provide functionalities for
+loading and displaying text files, initiating analysis, and viewing results.
+For this, you are asked to do the following:
+1. Design the user interface of the application using a suitable GUI framework (e.g.,
+Swing, JavaFX). The interface can be enhanced throughout the duration of the
+project.
+2. Implement the functionality to load text files from the local system. Users should
+be able to browse and select one or more files to be analyzed.
+3. Display the selected files (e.g., file names or basic information) in the application.
+Ensure that the information is properly displayed within the user interface.
+4. Add event handlers for button clicks and other UI interactions. Ensure that the
+interface is clear, intuitive, and responsive.
+
+Goal:
+By the end of this sprint, you should have a functional and user-friendly GUI
+skeleton ready for the next development stages.
+
+project structure needed 
+text-analyzer/
+│
+├── src/main/java/com/textanalyzer/
+│   │
+│   ├── App.java                     → Main JavaFX application
+│   ├── module-info.java             → JavaFX modules
+│   │
+│   ├── controllers/                 → ALL UI controllers (clean separation)
+│   │   ├── PrimaryController.java
+│   │   ├── SecondaryController.java
+│   │
+│   ├── services/                    → Business logic (threading, analysis)
+│   │   ├── FileLoaderService.java
+│   │   ├── TextAnalysisService.java
+│   │
+│   ├── models/                      → Data classes (POJO models)
+│   │   ├── AnalysisResult.java
+│   │   ├── AnalyzedFile.java
+│   │
+│   ├── utils/                       → Helper utilities
+│   │   ├── ThreadPoolManager.java
+│   │   ├── FileUtils.java
+│   │
+│   └── exceptions/                  → Custom exceptions
+│       ├── InvalidFileException.java
+│
+├── src/main/resources/com/textanalyzer/
+│   ├── primary.fxml
+│   ├── secondary.fxml
+│   ├── styles.css                   → CSS styling (professional UI)
+│   ├── icons/                       → app icons
+│
+├── pom.xml                          → Maven dependencies
+└── README.md                        → Documentation

@@ -1,0 +1,14 @@
+Sprint N°02: Single-Threaded Analyzer
+Description: In the second sprint, you will focus on implementing the text analysis
+functionality for a single file. The goal is to make sure the application correctly
+performs text processing before introducing concurrency.
+You are asked to do the following:
+1. Implement the functionality to perform text analysis (e.g., counting total words,
+unique words, most frequent terms). Optional: Sentiment Analysis of the file
+content)
+2. Display the analysis results in the interface for the selected text file.
+3. Handle errors gracefully when a file cannot be processed.
+4. Add a progress bar to visualize the analysis process.
+5. Ensure that the interface remains responsive during the analysis.
+6. Refine the user interface to make it more user-friendly based on the feedback or
+testing from Sprint 1.

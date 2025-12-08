@@ -1,6 +1,10 @@
 package com.textanalyzer.controllers;
 
-import javafx.application.Platform;
+import com.textanalyzer.App;
+import com.textanalyzer.exceptions.InvalidFileException;
+import com.textanalyzer.models.AnalysisResult;
+import com.textanalyzer.services.TextAnalysisService;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -8,6 +12,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +28,7 @@ public class PrimaryController {
     
     // Store full paths for processing while displaying only names
     private Map<String, String> fileNameToPathMap = new HashMap<>();
+    private TextAnalysisService analysisService = new TextAnalysisService();
 
     @FXML
     public void initialize() {
@@ -70,22 +76,91 @@ public class PrimaryController {
             return;
         }
 
-        updateStatus("Analyzing files...", "status-analyzing");
-        analyzeBtn.setDisable(true);
+        // For Sprint 2, we analyze only the first selected file
+        String firstFileName = fileListView.getItems().get(0);
+        String filePath = fileNameToPathMap.get(firstFileName);
+        File fileToAnalyze = new File(filePath);
 
-        // Placeholder for multithreading - will be replaced in Sprint 2
-        new Thread(() -> {
-            try {
-                Thread.sleep(2000); // Simulate analysis
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+        // Create a Task for background processing
+        Task<AnalysisResult> analysisTask = new Task<>() {
+            @Override
+            protected AnalysisResult call() throws Exception {
+                updateMessage("Reading file...");
+                updateProgress(0.1, 1.0);
+                
+                // Perform analysis
+                AnalysisResult result = analysisService.analyzeFile(fileToAnalyze);
+                
+                updateMessage("Counting words...");
+                updateProgress(0.5, 1.0);
+                
+                // Simulate processing time to show progress
+                Thread.sleep(500);
+                
+                updateMessage("Calculating frequencies...");
+                updateProgress(0.8, 1.0);
+                
+                Thread.sleep(300);
+                
+                updateMessage("Complete!");
+                updateProgress(1.0, 1.0);
+                
+                return result;
             }
+            
+            @Override
+            protected void succeeded() {
+                AnalysisResult result = getValue();
+                SecondaryController.setAnalysisResult(result);
+                
+                try {
+                    App.setRoot("secondary");
+                } catch (IOException e) {
+                    showError("Failed to load results view: " + e.getMessage());
+                }
+            }
+            
+            @Override
+            protected void failed() {
+                Throwable exception = getException();
+                String errorMsg = exception instanceof InvalidFileException 
+                    ? exception.getMessage()
+                    : "Analysis failed: " + exception.getMessage();
+                
+                SecondaryController.setError(errorMsg);
+                
+                try {
+                    App.setRoot("secondary");
+                } catch (IOException e) {
+                    showError("Failed to load error view: " + e.getMessage());
+                }
+            }
+        };
 
-            Platform.runLater(() -> {
-                updateStatus("Analysis complete!", "status-complete");
-                analyzeBtn.setDisable(false);
-            });
-        }).start();
+        // Update UI during task execution
+        analysisTask.messageProperty().addListener((obs, oldMsg, newMsg) -> {
+            updateStatus(newMsg, "status-analyzing");
+        });
+
+        // Disable button during analysis
+        analyzeBtn.setDisable(true);
+        analysisTask.setOnSucceeded(e -> analyzeBtn.setDisable(false));
+        analysisTask.setOnFailed(e -> analyzeBtn.setDisable(false));
+
+        // Run task in background thread
+        Thread analysisThread = new Thread(analysisTask);
+        analysisThread.setDaemon(true);
+        analysisThread.start();
+    }
+    
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Analysis Error");
+        alert.setContentText(message);
+        alert.showAndWait();
+        updateStatus("Error occurred", "status-error");
+        analyzeBtn.setDisable(false);
     }
 
     private void updateUIState() {

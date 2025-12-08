@@ -1,4 +1,5 @@
 com/textanalyzer/controllers/SecondaryController.class
+com/textanalyzer/controllers/PrimaryController$1.class
 com/textanalyzer/models/AnalyzedFile.class
 com/textanalyzer/utils/FileUtils.class
 com/textanalyzer/services/FileLoaderService.class

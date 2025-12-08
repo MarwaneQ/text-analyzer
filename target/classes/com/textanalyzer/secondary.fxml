@@ -1,16 +1,152 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.textanalyzer.controllers.SecondaryController"
-      stylesheets="@styles.css"
-      alignment="CENTER" spacing="20" style="-fx-padding: 30;">
-
-    <Label text="ANALYSIS RESULTS" style="-fx-font-size: 22; -fx-font-weight: bold;"/>
-
-    <TextArea fx:id="resultsArea" prefWidth="400" prefHeight="300"/>
-
-    <Button text="Back to Home" onAction="#onBack"/>
-</VBox>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.textanalyzer.controllers.SecondaryController"
+            stylesheets="@styles.css"
+            styleClass="root">
+    
+    <!-- Header Section -->
+    <top>
+        <VBox styleClass="header" alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="30" right="30" bottom="20" left="30"/>
+            </padding>
+            <Label text="ANALYSIS RESULTS" styleClass="app-title"/>
+            <Label text="Text File Analysis Report" styleClass="app-subtitle"/>
+        </VBox>
+    </top>
+    
+    <!-- Main Content -->
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="25" alignment="TOP_CENTER">
+                <padding>
+                    <Insets top="20" right="40" bottom="20" left="40"/>
+                </padding>
+                
+                <!-- Progress Section -->
+            <VBox fx:id="progressSection" spacing="15" styleClass="card">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                
+                <Label text="Analyzing..." styleClass="section-title"/>
+                <ProgressBar fx:id="progressBar" prefWidth="Infinity" prefHeight="30" 
+                             styleClass="progress-bar" progress="0"/>
+                <Label fx:id="progressLabel" text="Processing file..." 
+                       styleClass="progress-text"/>
+            </VBox>
+            
+            <!-- Results Section -->
+            <VBox fx:id="resultsSection" spacing="20" styleClass="card" visible="false" managed="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                
+                <Label fx:id="fileNameLabel" text="File: document.txt" 
+                       styleClass="result-filename"/>
+                
+                <!-- Statistics Grid -->
+                <GridPane hgap="30" vgap="15" styleClass="stats-grid">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    
+                    <!-- Total Words -->
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0" 
+                          styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Total Words" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="totalWordsLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <!-- Total Characters -->
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0" 
+                          styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Total Characters" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="totalCharactersLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <!-- Processing Time -->
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1" 
+                          styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Processing Time" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="processingTimeLabel" text="0 ms" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <!-- Vocabulary Richness -->
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1" 
+                          styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Vocabulary Richness" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="richnessLabel" text="0%" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                </GridPane>
+                
+                <!-- Word Frequencies -->
+                <VBox spacing="12" styleClass="frequency-section">
+                    <Label text="Top 10 Most Frequent Words" styleClass="section-title"/>
+                    <ListView fx:id="frequencyListView" prefHeight="250" minHeight="250"
+                              styleClass="frequency-list"/>
+                </VBox>
+                
+                <!-- Unique Words List -->
+                <VBox spacing="12" styleClass="frequency-section">
+                    <Label text="Rarest Word (Lowest Frequency)" styleClass="section-title"/>
+                    <ListView fx:id="uniqueWordsListView" prefHeight="100" minHeight="100"
+                              styleClass="frequency-list"/>
+                </VBox>
+            </VBox>
+            
+            <!-- Error Section -->
+            <VBox fx:id="errorSection" spacing="15" styleClass="error-card" 
+                  visible="false" managed="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                <Label text="⚠️ Analysis Error" styleClass="error-title"/>
+                <Label fx:id="errorLabel" text="An error occurred" 
+                       styleClass="error-text" wrapText="true"/>
+            </VBox>
+            
+            <!-- Action Buttons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button styleClass="secondary-button" 
+                        prefWidth="180" prefHeight="45" onAction="#switchToPrimary">
+                    <graphic>
+                        <Label text="← Back to Analyzer" styleClass="button-text"/>
+                    </graphic>
+                </Button>
+                
+                <Button fx:id="analyzeAnotherBtn" styleClass="primary-button" 
+                        prefWidth="180" prefHeight="45" onAction="#analyzeAnother" 
+                        visible="false" managed="false">
+                    <graphic>
+                        <Label text="Analyze Another File" styleClass="button-text"/>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+        </ScrollPane>
+    </center>
+    
+    <!-- Footer Status Bar -->
+    <bottom>
+        <HBox styleClass="status-bar" alignment="CENTER_LEFT" spacing="10">
+            <padding>
+                <Insets top="15" right="30" bottom="15" left="30"/>
+            </padding>
+            <Label text="●" fx:id="statusIndicator" styleClass="status-indicator status-ready"/>
+            <Label fx:id="statusLabel" text="Ready" styleClass="status-text"/>
+        </HBox>
+    </bottom>
+    
+</BorderPane>
