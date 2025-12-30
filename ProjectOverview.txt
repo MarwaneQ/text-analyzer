@@ -79,3 +79,55 @@ text-analyzer/
 │
 ├── pom.xml                          → Maven dependencies
 └── README.md                        → Documentation
+
+Sprint N°01: User Interface Development
+
+Description:
+In the first sprint, you will focus on creating the user interface for the desktop
+application. The interface should be user-friendly and provide functionalities for
+loading and displaying text files, initiating analysis, and viewing results.
+For this, you are asked to do the following:
+1. Design the user interface of the application using a suitable GUI framework (e.g.,
+Swing, JavaFX). The interface can be enhanced throughout the duration of the
+project.
+2. Implement the functionality to load text files from the local system. Users should
+be able to browse and select one or more files to be analyzed.
+3. Display the selected files (e.g., file names or basic information) in the application.
+Ensure that the information is properly displayed within the user interface.
+4. Add event handlers for button clicks and other UI interactions. Ensure that the
+interface is clear, intuitive, and responsive.
+
+Goal:
+By the end of this sprint, you should have a functional and user-friendly GUI
+skeleton ready for the next development stages.
+
+Sprint N°02: Single-Threaded Analyzer
+
+Description: In the second sprint, you will focus on implementing the text analysis
+functionality for a single file. The goal is to make sure the application correctly
+performs text processing before introducing concurrency.
+You are asked to do the following:
+1. Implement the functionality to perform text analysis (e.g., counting total words,
+unique words, most frequent terms). Optional: Sentiment Analysis of the file
+content)
+2. Display the analysis results in the interface for the selected text file.
+3. Handle errors gracefully when a file cannot be processed.
+4. Add a progress bar to visualize the analysis process.
+5. Ensure that the interface remains responsive during the analysis.
+6. Refine the user interface to make it more user-friendly based on the feedback or
+testing from Sprint 1.
+
+Sprint N°03: Multi-Threaded Analyzer
+
+Description: In the third sprint, you will introduce multithreading to enable
+concurrent analysis of multiple text files. The aim is to optimize performance while
+ensuring correct and synchronized results.
+You are asked to do the following:
+1. Use Java concurrency tools (e.g., ExecutorService, ThreadPoolExecutor) to
+manage multiple threads.
+2. Ensure thread safety and manage shared resources if applicable.
+3. Test the multi-threaded functionality with different numbers of files .
+4. Debug any issues related to concurrency and performance.
+5. Update your UI design to make it compatible with the new features while
+ensuring it remains user-friendly.
+6. Write the project report according to the guidelines provided in the second file
