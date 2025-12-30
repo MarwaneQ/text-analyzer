@@ -484,3 +484,65 @@
   -fx-text-fill: #38ef7d;
   -fx-effect: dropshadow(gaussian, rgba(56, 239, 125, 0.6), 8, 0, 0, 0);
 }
+/* ============================================
+   SPRINT 3: MULTI-FILE TABLE STYLES
+   ============================================ */
+.files-table {
+  -fx-background-color: white;
+  -fx-background-radius: 8px;
+  -fx-border-radius: 8px;
+  -fx-border-color: #e9ecef;
+  -fx-border-width: 1px;
+}
+
+.files-table .column-header-background {
+  -fx-background-color: linear-gradient(to right, #667eea 0%, #764ba2 100%);
+}
+
+.files-table .column-header {
+  -fx-background-color: transparent;
+  -fx-border-color: transparent;
+}
+
+.files-table .column-header .label {
+  -fx-text-fill: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 14px;
+  -fx-padding: 10px;
+}
+
+.files-table .table-row-cell {
+  -fx-background-color: white;
+  -fx-border-color: #f0f0f0;
+  -fx-border-width: 0 0 1px 0;
+}
+
+.files-table .table-row-cell:odd {
+  -fx-background-color: #f8f9fa;
+}
+
+.files-table .table-row-cell:selected {
+  -fx-background-color: #e8e3f3;
+}
+
+.files-table .table-row-cell:hover {
+  -fx-background-color: #f0ebf7;
+}
+
+.files-table .table-cell {
+  -fx-text-fill: #333333;
+  -fx-font-size: 13px;
+  -fx-padding: 12px 8px;
+  -fx-alignment: CENTER-LEFT;
+}
+
+.files-table .table-view:focused {
+  -fx-background-color: white;
+}
+
+/* Multi-result stat cards with smaller font */
+.multi-stat-value {
+  -fx-font-size: 24px;
+  -fx-font-weight: bold;
+  -fx-text-fill: white;
+}

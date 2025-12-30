@@ -3,7 +3,10 @@ package com.textanalyzer.controllers;
 import com.textanalyzer.App;
 import com.textanalyzer.exceptions.InvalidFileException;
 import com.textanalyzer.models.AnalysisResult;
+import com.textanalyzer.models.MultiFileAnalysisResult;
+import com.textanalyzer.services.MultiFileAnalysisService;
 import com.textanalyzer.services.TextAnalysisService;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -13,10 +16,15 @@ import javafx.scene.layout.Priority;
 import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Primary controller for the main view.
+ * Sprint 3: Updated to support multi-threaded concurrent file analysis.
+ */
 public class PrimaryController {
 
     @FXML private ListView<String> fileListView;
@@ -28,7 +36,9 @@ public class PrimaryController {
     
     // Store full paths for processing while displaying only names
     private Map<String, String> fileNameToPathMap = new HashMap<>();
-    private TextAnalysisService analysisService = new TextAnalysisService();
+    
+    // Sprint 3: Multi-file analysis service
+    private MultiFileAnalysisService multiFileAnalysisService = new MultiFileAnalysisService();
 
     @FXML
     public void initialize() {
@@ -76,42 +86,47 @@ public class PrimaryController {
             return;
         }
 
-        // For Sprint 2, we analyze only the first selected file
-        String firstFileName = fileListView.getItems().get(0);
-        String filePath = fileNameToPathMap.get(firstFileName);
-        File fileToAnalyze = new File(filePath);
-
-        // Create a Task for background processing
-        Task<AnalysisResult> analysisTask = new Task<>() {
+        // Sprint 3: Collect all files for concurrent analysis
+        List<File> filesToAnalyze = new ArrayList<>();
+        for (String fileName : fileListView.getItems()) {
+            String filePath = fileNameToPathMap.get(fileName);
+            filesToAnalyze.add(new File(filePath));
+        }
+        
+        int fileCount = filesToAnalyze.size();
+        
+        // Create a Task for multi-threaded background processing
+        Task<MultiFileAnalysisResult> analysisTask = new Task<>() {
             @Override
-            protected AnalysisResult call() throws Exception {
-                updateMessage("Reading file...");
-                updateProgress(0.1, 1.0);
+            protected MultiFileAnalysisResult call() throws Exception {
+                updateMessage("Starting concurrent analysis of " + fileCount + " files...");
+                updateProgress(0, fileCount);
                 
-                // Perform analysis
-                AnalysisResult result = analysisService.analyzeFile(fileToAnalyze);
+                // Set progress callback to update UI
+                multiFileAnalysisService.setProgressCallback(progress -> {
+                    Platform.runLater(() -> {
+                        updateMessage(String.format("Analyzing: %s [%s] (%d/%d)", 
+                            progress.currentFile, 
+                            progress.threadName,
+                            progress.completed, 
+                            progress.total));
+                        updateProgress(progress.completed, progress.total);
+                    });
+                });
                 
-                updateMessage("Counting words...");
-                updateProgress(0.5, 1.0);
+                // Perform concurrent analysis
+                MultiFileAnalysisResult result = multiFileAnalysisService.analyzeFiles(filesToAnalyze);
                 
-                // Simulate processing time to show progress
-                Thread.sleep(500);
-                
-                updateMessage("Calculating frequencies...");
-                updateProgress(0.8, 1.0);
-                
-                Thread.sleep(300);
-                
-                updateMessage("Complete!");
-                updateProgress(1.0, 1.0);
+                updateMessage("Analysis complete!");
+                updateProgress(fileCount, fileCount);
                 
                 return result;
             }
             
             @Override
             protected void succeeded() {
-                AnalysisResult result = getValue();
-                SecondaryController.setAnalysisResult(result);
+                MultiFileAnalysisResult result = getValue();
+                SecondaryController.setMultiFileResult(result);
                 
                 try {
                     App.setRoot("secondary");
@@ -123,9 +138,7 @@ public class PrimaryController {
             @Override
             protected void failed() {
                 Throwable exception = getException();
-                String errorMsg = exception instanceof InvalidFileException 
-                    ? exception.getMessage()
-                    : "Analysis failed: " + exception.getMessage();
+                String errorMsg = "Multi-file analysis failed: " + exception.getMessage();
                 
                 SecondaryController.setError(errorMsg);
                 
@@ -188,6 +201,8 @@ public class PrimaryController {
     private void removeFile(String fileName) {
         fileListView.getItems().remove(fileName);
         fileNameToPathMap.remove(fileName);
+        
+       
         
         if (fileListView.getItems().isEmpty()) {
             updateStatus("All files removed", "status-ready");

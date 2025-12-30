@@ -106,6 +106,94 @@
                 </VBox>
             </VBox>
             
+            <!-- Multi-File Results Section (Sprint 3) -->
+            <VBox fx:id="multiResultsSection" spacing="20" styleClass="card" visible="false" managed="false">
+                <padding>
+                    <Insets top="20" right="20" bottom="20" left="20"/>
+                </padding>
+                
+                <Label text="📊 Multi-File Analysis Results" styleClass="section-title" style="-fx-font-size: 24px;"/>
+                
+                <!-- Summary Statistics Grid -->
+                <GridPane hgap="20" vgap="15" styleClass="stats-grid">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES"/>
+                    </columnConstraints>
+                    
+                    <!-- Row 1: File counts -->
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="0" styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Total Files" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="totalFilesLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="stat-card" 
+                          style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #11998e 0%, #38ef7d 100%);">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Successful" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="successFilesLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="0" styleClass="stat-card"
+                          style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #eb3349 0%, #f45c43 100%);">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Failed" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="failedFilesLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="3" GridPane.rowIndex="0" styleClass="stat-card"
+                          style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #4facfe 0%, #00f2fe 100%);">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Threads Used" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="threadsUsedLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <!-- Row 2: Content stats -->
+                    <VBox spacing="5" GridPane.columnIndex="0" GridPane.rowIndex="1" styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Total Words" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="totalWordsAllLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="1" GridPane.rowIndex="1" styleClass="stat-card">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Total Chars" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="totalCharsAllLabel" text="0" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="2" GridPane.rowIndex="1" styleClass="stat-card"
+                          style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #f093fb 0%, #f5576c 100%);">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Parallel Time" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="parallelTimeLabel" text="0 ms" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                    
+                    <VBox spacing="5" GridPane.columnIndex="3" GridPane.rowIndex="1" styleClass="stat-card"
+                          style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #fa709a 0%, #fee140 100%);">
+                        <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+                        <Label text="Speedup" styleClass="stat-label" style="-fx-text-fill: white;"/>
+                        <Label fx:id="speedupLabel" text="0x" styleClass="stat-value" style="-fx-text-fill: white;"/>
+                    </VBox>
+                </GridPane>
+                
+                <!-- Files Table -->
+                <VBox spacing="12" styleClass="frequency-section">
+                    <Label text="Individual File Results" styleClass="section-title"/>
+                    <TableView fx:id="filesTableView" prefHeight="300" minHeight="200" styleClass="files-table">
+                        <columns>
+                            <TableColumn fx:id="fileNameColumn" text="File Name" prefWidth="200"/>
+                            <TableColumn fx:id="wordsColumn" text="Words" prefWidth="100"/>
+                            <TableColumn fx:id="charsColumn" text="Characters" prefWidth="100"/>
+                            <TableColumn fx:id="timeColumn" text="Time" prefWidth="100"/>
+                            <TableColumn fx:id="statusColumn" text="Status" prefWidth="150"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </VBox>
+            
             <!-- Error Section -->
             <VBox fx:id="errorSection" spacing="15" styleClass="error-card" 
                   visible="false" managed="false">
