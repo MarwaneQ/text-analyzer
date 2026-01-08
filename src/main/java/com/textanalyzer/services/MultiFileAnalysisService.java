@@ -7,6 +7,7 @@ import com.textanalyzer.models.MultiFileAnalysisResult;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.*;
 import java.util.function.Consumer;
 
@@ -78,10 +79,14 @@ public class MultiFileAnalysisService {
         // Create list to hold futures
         List<Future<AnalysisResult>> futures = new ArrayList<>();
         
+        // Track unique threads used (thread-safe)
+        Set<String> threadsUsed = ConcurrentHashMap.newKeySet();
+        
         // Submit all files for concurrent processing
         for (File file : files) {
             Future<AnalysisResult> future = threadPoolManager.submit(() -> {
                 String threadName = Thread.currentThread().getName();
+                threadsUsed.add(threadName);  // Track this thread
                 
                 // Notify progress - starting file
                 notifyProgress(result.getCompletedCount(), files.size(), 
@@ -140,7 +145,7 @@ public class MultiFileAnalysisService {
         
         // Record completion time and thread info
         result.setOverallEndTime(System.currentTimeMillis());
-        result.setThreadsUsed(threadPoolManager.getActiveThreadCount());
+        result.setThreadsUsed(threadsUsed.size());  // Actual threads that processed files
         
         System.out.println("Multi-file analysis complete: " + result);
         System.out.println(threadPoolManager.getPoolStats());
