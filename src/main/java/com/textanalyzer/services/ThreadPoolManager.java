@@ -17,13 +17,17 @@ public class ThreadPoolManager {
     // Thread pool executor
     private ExecutorService executorService;
     
-    // Configuration
-    private static final int CORE_POOL_SIZE = 4;      // Minimum threads
-    private static final int MAX_POOL_SIZE = 8;       // Maximum threads
+    // Configuration - Use available processors for optimal concurrency
+    private static final int CORE_POOL_SIZE = Math.max(4, Runtime.getRuntime().availableProcessors());
+    private static final int MAX_POOL_SIZE = Math.max(8, Runtime.getRuntime().availableProcessors() * 2);
     private static final long KEEP_ALIVE_TIME = 60L;  // Seconds idle threads wait before terminating
     
     // Thread counter for naming
     private final AtomicInteger threadCounter = new AtomicInteger(0);
+    
+    // Track peak thread usage during execution
+    private final AtomicInteger peakThreadCount = new AtomicInteger(0);
+    private final AtomicInteger currentActiveThreads = new AtomicInteger(0);
     
     /**
      * Private constructor for singleton pattern
@@ -55,16 +59,20 @@ public class ThreadPoolManager {
             return thread;
         };
         
-        // Create ThreadPoolExecutor with bounded queue
+        // Create ThreadPoolExecutor with SynchronousQueue for immediate thread creation
+        // SynchronousQueue has no capacity, forcing new thread creation up to MAX_POOL_SIZE
         executorService = new ThreadPoolExecutor(
             CORE_POOL_SIZE,                          // Core pool size
             MAX_POOL_SIZE,                           // Maximum pool size
             KEEP_ALIVE_TIME,                         // Keep alive time
             TimeUnit.SECONDS,                        // Time unit
-            new LinkedBlockingQueue<>(100),          // Work queue (bounded)
+            new SynchronousQueue<>(),                // SynchronousQueue forces new thread creation
             threadFactory,                           // Thread factory
             new ThreadPoolExecutor.CallerRunsPolicy() // Rejection policy
         );
+        
+        // Pre-start core threads for faster initial response
+        ((ThreadPoolExecutor) executorService).prestartAllCoreThreads();
         
         System.out.println("ThreadPoolManager initialized with " + CORE_POOL_SIZE + 
                           " core threads, max " + MAX_POOL_SIZE + " threads");
@@ -72,11 +80,23 @@ public class ThreadPoolManager {
     
     /**
      * Submits a Callable task for execution
+     * Tracks thread usage for statistics
      * @param task The task to execute
      * @return Future representing the pending result
      */
     public <T> Future<T> submit(Callable<T> task) {
-        return executorService.submit(task);
+        // Wrap task to track thread usage
+        Callable<T> wrappedTask = () -> {
+            int active = currentActiveThreads.incrementAndGet();
+            // Update peak if current is higher
+            peakThreadCount.updateAndGet(peak -> Math.max(peak, active));
+            try {
+                return task.call();
+            } finally {
+                currentActiveThreads.decrementAndGet();
+            }
+        };
+        return executorService.submit(wrappedTask);
     }
     
     /**
@@ -129,6 +149,32 @@ public class ThreadPoolManager {
     public int getActiveThreadCount() {
         if (executorService instanceof ThreadPoolExecutor) {
             return ((ThreadPoolExecutor) executorService).getActiveCount();
+        }
+        return 0;
+    }
+    
+    /**
+     * Gets the peak number of threads used during execution
+     * @return Peak thread count
+     */
+    public int getPeakThreadCount() {
+        return peakThreadCount.get();
+    }
+    
+    /**
+     * Resets peak thread counter (call before new analysis batch)
+     */
+    public void resetPeakThreadCount() {
+        peakThreadCount.set(0);
+    }
+    
+    /**
+     * Gets the largest pool size reached
+     * @return Largest pool size
+     */
+    public int getLargestPoolSize() {
+        if (executorService instanceof ThreadPoolExecutor) {
+            return ((ThreadPoolExecutor) executorService).getLargestPoolSize();
         }
         return 0;
     }

@@ -76,6 +76,9 @@ public class MultiFileAnalysisService {
             return result;
         }
         
+        // Reset peak thread counter before starting new analysis
+        threadPoolManager.resetPeakThreadCount();
+        
         // Create list to hold futures
         List<Future<AnalysisResult>> futures = new ArrayList<>();
         
@@ -145,10 +148,17 @@ public class MultiFileAnalysisService {
         
         // Record completion time and thread info
         result.setOverallEndTime(System.currentTimeMillis());
-        result.setThreadsUsed(threadsUsed.size());  // Actual threads that processed files
+        // Use the maximum of: tracked threads, peak count, or largest pool size
+        int actualThreadsUsed = Math.max(threadsUsed.size(), 
+                                 Math.max(threadPoolManager.getPeakThreadCount(),
+                                          threadPoolManager.getLargestPoolSize()));
+        result.setThreadsUsed(actualThreadsUsed);
         
         System.out.println("Multi-file analysis complete: " + result);
         System.out.println(threadPoolManager.getPoolStats());
+        System.out.println("Threads tracked: " + threadsUsed.size() + ", Peak: " + 
+                          threadPoolManager.getPeakThreadCount() + ", Largest pool: " + 
+                          threadPoolManager.getLargestPoolSize());
         
         return result;
     }
